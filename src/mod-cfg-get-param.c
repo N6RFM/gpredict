@@ -217,7 +217,12 @@ void mod_cfg_set_integer_list_boolean(GKeyFile * cfgdata, GHashTable * hash,
     gint           *showtrack;
     gint           *something;
     gint            i, length;
-    GList          *keys = g_hash_table_get_keys(hash);
+    GList          *keys;
+
+    if (hash == NULL)
+        return;
+
+    keys = g_hash_table_get_keys(hash);
 
     length = g_list_length(keys);
     if (g_list_length(keys) > 0)
