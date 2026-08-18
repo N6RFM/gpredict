@@ -62,6 +62,9 @@ decode_alpha5_catnr(const char field[5])
              (field[3] - '0') * 10 +
              (field[4] - '0');
 
+    if (field[0] == ' ')
+        return suffix;
+
     if (field[0] >= '0' && field[0] <= '9')
         return (field[0] - '0') * 10000 + suffix;
 

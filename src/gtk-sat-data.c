@@ -133,6 +133,17 @@ gint gtk_sat_data_read_sat(gint catnum, sat_t * sat)
         else
         {
             Convert_Satellite_Data(rawtle, &sat->tle);
+
+            /* Convert_Satellite_Data (SGP4 library) does not understand
+               Alpha-5 encoded catalog numbers (e.g. "A0000" for 100000)
+               and will mis-parse them, typically returning 0 for any
+               satellite in a given Alpha-5 letter block. This causes
+               hash-key collisions when multiple such satellites are
+               loaded (see catnr-based lookups in gtk-sat-list.c).
+               The catnum parameter passed into this function is always
+               correct (derived from the filename), so use it as the
+               source of truth. */
+            sat->tle.catnr = catnum;
         }
         if (g_key_file_has_key(data, "Satellite", "STATUS", NULL))
             sat->tle.status =
