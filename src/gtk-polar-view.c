@@ -101,7 +101,11 @@ static void gtk_polar_view_destroy(GtkWidget * widget)
 {
     GtkPolarView *polv = GTK_POLAR_VIEW(widget);
 
-    gtk_polar_view_store_showtracks(polv);
+    /* GTK may invoke destroy more than once on the same widget; only
+     * persist/free state the first time through, otherwise
+     * showtracks_on/off are already NULL and get_keys() will assert. */
+    if (polv->showtracks_on || polv->showtracks_off)
+        gtk_polar_view_store_showtracks(polv);
 
     g_free(polv->curs_text);
     polv->curs_text = NULL;
