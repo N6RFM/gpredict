@@ -37,3 +37,4 @@ m4/
 GTAGS
 GRTAGS
 GPATH
+po/.intltool-merge-cache.lock
