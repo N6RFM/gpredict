@@ -1,7 +1,23 @@
-Changes in version 2.5.2 (TBD)
+Changes in version 2.6 (16 Aug 2026)
+
+ - Added satellite filter to the radio and rotator controllers (#339)
+ - Removed invalid data from satellites.dat (#413)
+ - Fixed posistioning of North and South labels in the polar views (#415)
+ - Fixed wrong display of polar plot orintation setting in config dialog
+ - Fixed missing cursor elevation in polar views (#416)
+ - Fixed missing Next Event in the polar view (#417)
+ - Limit width of transponder selector in the radio controller window
+ - Updated contributors (#414)
+ - Removed NOAA and Molniya satellite groups (no longer available)
+
+
+Changes in version 2.5.2 (20 Jul 2026)
 
  - Fixed compilation error on Windows (MSYS64)
  - Added support for more recent versions of gpsd (#404)
+ - Fixed second rig not connecting (#407)
+ - Fix data race by reloading satellites in the main thread (#409)
+ - Fix some warning messages at program exit
 
 
 Changes in version 2.5.1 (22 March 2026)

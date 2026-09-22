@@ -4,9 +4,8 @@
 # converting Celestrak TLE files into a satellites.dat and .cat files.
 #
 # 1. Copy this script into a temp folder
-# 2. Create subdirectories ./in/ ./tmp/ and ./out/
-# 3. Run the script
-# 4. You should have a .cat file for each category as well as a satellites.dat
+# 2. Run the script
+# 3. You should have a .cat file for each category as well as a satellites.dat
 #    file in the ./out/ folder
 #
 # This script is only used during development and is not needed by end users.
@@ -24,8 +23,8 @@ groups = {
     "glo-ops" : "Glonass Operational",
     "gps-ops" : "GPS Operational",
     "iridium-NEXT" : "Iridium NEXT",
-    "molniya" : "Molniya",
-    "noaa" : "NOAA",
+#    "molniya" : "Molniya",
+#    "noaa" : "NOAA",
     "science" : "Space & Earth Science",
     "visual" : "Brightest",
     "weather" : "Weather Satellites"
@@ -91,6 +90,14 @@ nicknames = {
 
 urlprefix = "https://celestrak.org/NORAD/elements/gp.php?GROUP="
 urlsuffix = "&FORMAT=tle"
+
+# create working directories if they do not exist
+if not os.path.exists("in"):
+    os.makedirs("in")
+if not os.path.exists("out"):
+    os.makedirs("out")
+if not os.path.exists("tmp"):
+    os.makedirs("tmp")
 
 for group, name in groups.items():
     webfile = urlprefix + group + urlsuffix
