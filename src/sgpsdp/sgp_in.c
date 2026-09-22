@@ -107,14 +107,45 @@ int Good_Elements(char *tle_set)
 /* to their intended numerical values. No processing   */
 /* of these values is done, e.g. from deg to rads etc. */
 /* This is done in the select_ephemeris() function.    */
+
+static int
+decode_alpha5_catnr(const char field[5])
+{
+    static const char alpha5[] = "ABCDEFGHJKLMNPQRSTUVWXYZ";
+    const char *p;
+    int suffix;
+    int i;
+
+    for (i = 1; i < 5; i++)
+    {
+        if (field[i] < '0' || field[i] > '9')
+            return 0;
+    }
+
+    suffix = (field[1] - '0') * 1000 +
+             (field[2] - '0') * 100 +
+             (field[3] - '0') * 10 +
+             (field[4] - '0');
+
+    if (field[0] == ' ')
+        return suffix;
+
+    if (field[0] >= '0' && field[0] <= '9')
+        return (field[0] - '0') * 10000 + suffix;
+
+    p = strchr(alpha5, g_ascii_toupper(field[0]));
+    if (p == NULL)
+        return 0;
+
+    return (10 + (int)(p - alpha5)) * 10000 + suffix;
+}
+
 void Convert_Satellite_Data(char *tle_set, tle_t * tle)
 {
     char            buff[15];
 
     /* Satellite's catalogue number */
-    strncpy(buff, &tle_set[2], 5);
-    buff[5] = '\0';
-    tle->catnr = atoi(buff);
+    tle->catnr = decode_alpha5_catnr(&tle_set[2]);
 
     /* International Designator for satellite */
     strncpy(tle->idesg, &tle_set[9], 8);
